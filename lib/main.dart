@@ -12,11 +12,11 @@ class MyApp extends StatefulWidget {
 class MyAppState extends State<MyApp> {
   int selectedPage = 0;
   final pageOptions = [
-    Text('Item1', style: TextStyle(fontSize: 50.0)),
-    Text('Item2', style: TextStyle(fontSize: 36.0)),
-    Text('Item3', style: TextStyle(fontSize: 36.0)),
-    Text('Item4', style: TextStyle(fontSize: 36.0)),
-    Text('Item5', style: TextStyle(fontSize: 36.0))
+    Text('Пригубить', style: TextStyle(fontSize: 50.0)),
+    Text('Бухнуть слегонца', style: TextStyle(fontSize: 50.0)),
+    Text('Выпить средне', style: TextStyle(fontSize: 50.0)),
+    Text('Напиться сильно', style: TextStyle(fontSize: 50.0)),
+    Text('Нажраться', style: TextStyle(fontSize: 50.0))
   ];
 
   @override
