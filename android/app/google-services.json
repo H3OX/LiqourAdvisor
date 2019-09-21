@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "968960704900",
+    "firebase_url": "https://liquoradvisor.firebaseio.com",
+    "project_id": "liquoradvisor",
+    "storage_bucket": "liquoradvisor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968960704900:android:a1aeb408cfb1de82a59dd1",
+        "android_client_info": {
+          "package_name": "aeons.liquor_advisor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968960704900-spej22nbdbn7dc11hkbefa3mgbevo2u5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQvRoVCLK64mTYqPwpCZZn6GA91E70qKs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968960704900-spej22nbdbn7dc11hkbefa3mgbevo2u5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

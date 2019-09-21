@@ -30,7 +30,7 @@ class MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('NavBar'),
+          title: Text('Подбор алкогольного напитка'),
         ),
         body: pageOptions[selectedPage],
         bottomNavigationBar: BottomNavigationBar(
