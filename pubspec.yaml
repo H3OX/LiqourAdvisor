@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  angles: '^1.2.1'
   flutter:
     sdk: flutter
   cloud_firestore: 0.12.9+4

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:liquor_advisor/my_flutter_app_icons.dart';
 
+
 final db = Firestore.instance;
 
 
@@ -39,10 +40,20 @@ class MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: Text('Подбор алкогольного напитка'),
         ),
-        floatingActionButton: FloatingActionButton(
-            onPressed: uploadPressed,
-            backgroundColor: Colors.cyanAccent,
-            child: Icon(Icons.cloud_upload)
+        floatingActionButton: Builder(
+          builder: (BuildContext context) {
+            return FloatingActionButton(
+              child: Icon(Icons.cloud_upload),
+              onPressed: () {
+                Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Запись создана'),
+                    )
+                );
+                uploadPressed();
+              },
+            );
+          },
         ),
         body: Row(
           children: <Widget>[
@@ -55,7 +66,7 @@ class MyAppState extends State<MyApp> {
                     },
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10),
-                        hintText: 'Price'
+                        hintText: 'Цена'
                     )
                 ),
               ),
@@ -69,7 +80,7 @@ class MyAppState extends State<MyApp> {
                     },
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10),
-                        hintText: 'Name'
+                        hintText: 'Название'
                     )
                 ),
               ),
@@ -83,7 +94,7 @@ class MyAppState extends State<MyApp> {
                     },
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(10),
-                        hintText: 'Type'
+                        hintText: 'Тип'
                     )
                 ),
               ),
