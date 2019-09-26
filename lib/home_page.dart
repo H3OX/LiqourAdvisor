@@ -48,7 +48,7 @@ class HomePageState extends State<HomePage> {
                 'Слабо',
                 style: TextStyle(fontSize: 20.0),
               ),
-              trailing: Icon(MyFlutterApp.coffee_cup),
+              trailing: Icon(UsefulIcons.coffee_cup),
               onTap: () {
                 Navigator.of(context).pop();
                 this.effect = 1;
@@ -60,7 +60,7 @@ class HomePageState extends State<HomePage> {
                 'Немного',
                 style: TextStyle(fontSize: 20.0),
               ),
-              trailing: Icon(MyFlutterApp.coffee),
+              trailing: Icon(UsefulIcons.coffee),
               onTap: () {
                 Navigator.of(context).pop();
                 this.effect = 2;
@@ -72,7 +72,7 @@ class HomePageState extends State<HomePage> {
                 'Средне',
                 style: TextStyle(fontSize: 20.0),
               ),
-              trailing: Icon(MyFlutterApp.beer),
+              trailing: Icon(UsefulIcons.beer),
               onTap: () {
                 Navigator.of(context).pop();
                 this.effect = 3;
@@ -84,7 +84,7 @@ class HomePageState extends State<HomePage> {
                 'Сильно',
                 style: TextStyle(fontSize: 20.0),
               ),
-              trailing: Icon(MyFlutterApp.wine),
+              trailing: Icon(UsefulIcons.wine),
               onTap: () {
                 Navigator.of(context).pop();
                 this.effect = 4;
@@ -115,49 +115,23 @@ class HomePageState extends State<HomePage> {
       ),
       body: Column(
         children: <Widget>[
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  'Название:',
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+          Card(
+            margin: EdgeInsets.all(10.0),
+            elevation: 3.0,
+            shape: RoundedRectangleBorder(
+                side: BorderSide(width: 0.2),
+                borderRadius: BorderRadius.circular(20)
                 ),
-              ),
-              Padding(
-                  child: Text(resTitle, style: TextStyle(fontSize: 20)),
-                  padding: EdgeInsets.all(20.0))
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  'Цена:',
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Text(resTitle),
+                  leading: Icon(UsefulIcons.wine),
+                  subtitle: Text(resType),
                 ),
-              ),
-              Padding(
-                  child:
-                      Text(resPrice.toString(), style: TextStyle(fontSize: 20)),
-                  padding: EdgeInsets.all(20.0))
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  'Тип:',
-                  style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
-                ),
-              ),
-              Padding(
-                  child: Text(resType, style: TextStyle(fontSize: 20)),
-                  padding: EdgeInsets.all(20.0))
-            ],
-          ),
+              ]
+            )
+        ),
           Expanded(
             child: Container(),
           ),

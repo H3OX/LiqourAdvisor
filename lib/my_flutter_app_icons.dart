@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-class MyFlutterApp {
-  MyFlutterApp._();
+class UsefulIcons {
+  UsefulIcons._();
 
   static const _kFontFam = 'MyFlutterApp';
 
