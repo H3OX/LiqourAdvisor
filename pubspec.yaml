@@ -17,7 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  http: any
   grouped_buttons: ^1.0.4
+  flushbar: any
   font_awesome_flutter: any
   angles: '^1.2.1'
   flutter:
