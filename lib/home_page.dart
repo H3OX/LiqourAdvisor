@@ -33,6 +33,7 @@ class HomePageState extends State<HomePage> {
 
     var scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       key: scaffoldKey,
       appBar: AppBar(
         title: Text('Подбор алкоголя'),
