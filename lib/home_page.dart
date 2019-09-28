@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquor_advisor/my_flutter_app_icons.dart';
 import 'weatherRequest.dart';
-import 'resultPage.dart';
 
 final db = Firestore.instance;
 
@@ -20,14 +19,14 @@ class HomePageState extends State<HomePage> {
   String imageURI =
       'https://www.irishtimes.com/polopoly_fs/1.3334998.1514975827!/image/image.jpg_gen/derivatives/box_620_330/image.jpg';
 
-  int effect;
-  int age;
-  int weight;
-  int height;
-  String temp;
+  static int isButtonOff = 0;
+  static int effect;
+  static int age;
+  static int weight;
+  static int height;
+  static String temp;
   final sb = SnackBar(content: Text('Некоторые поля пустые!'));
 
-  var docs = db.collection('liquors');
   
   @override
   Widget build(BuildContext context) {
@@ -62,7 +61,8 @@ class HomePageState extends State<HomePage> {
               trailing: Icon(UsefulIcons.coffee_cup),
               onTap: () {
                 Navigator.of(context).pop();
-                this.effect = 1;
+                HomePageState.effect = 1;
+                HomePageState.isButtonOff = 1;
                 print(effect);
               },
             ),
@@ -74,7 +74,8 @@ class HomePageState extends State<HomePage> {
               trailing: Icon(UsefulIcons.coffee),
               onTap: () {
                 Navigator.of(context).pop();
-                this.effect = 2;
+                HomePageState.effect = 2;
+                HomePageState.isButtonOff = 1;
                 print(effect);
               },
             ),
@@ -86,7 +87,8 @@ class HomePageState extends State<HomePage> {
               trailing: Icon(UsefulIcons.beer),
               onTap: () {
                 Navigator.of(context).pop();
-                this.effect = 3;
+                HomePageState.effect = 3;
+                HomePageState.isButtonOff = 1;
                 print(effect);
               },
             ),
@@ -98,7 +100,8 @@ class HomePageState extends State<HomePage> {
               trailing: Icon(UsefulIcons.wine),
               onTap: () {
                 Navigator.of(context).pop();
-                this.effect = 4;
+                HomePageState.effect = 4;
+                HomePageState.isButtonOff = 1;
                 print(effect);
               },
             ),
@@ -110,7 +113,8 @@ class HomePageState extends State<HomePage> {
               trailing: Icon(Icons.whatshot),
               onTap: () {
                 Navigator.of(context).pop();
-                this.effect = 5;
+                HomePageState.effect = 5;
+                HomePageState.isButtonOff = 1;
                 print(effect);
               },
             ),
@@ -131,7 +135,7 @@ class HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(0.0),
               child: FutureBuilder(
                 future: getWeather(),
-                initialData: 'Loading...',
+                initialData: 'Fetch...',
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   return (
                     ListTile(
@@ -140,7 +144,7 @@ class HomePageState extends State<HomePage> {
                       leading: Icon(Icons.wb_sunny, color: Colors.yellow,),
                       title: Text('${snapshot.data.toString()}°C', style: TextStyle(fontSize: 18.0, color: Colors.cyanAccent)),
                       onTap: () {
-                        this.temp = snapshot.data.toString();
+                        HomePageState.temp = snapshot.data.toString();
                       }
                     )
                   );
@@ -156,8 +160,8 @@ class HomePageState extends State<HomePage> {
               ),
               keyboardType: TextInputType.phone,
               onFieldSubmitted: (String val) {
-                this.age = int.parse(val);
-                print(this.age);
+                HomePageState.age = int.parse(val);
+                print(HomePageState.age);
               },
             ),
             ),
@@ -170,7 +174,7 @@ class HomePageState extends State<HomePage> {
                 ),
                 keyboardType: TextInputType.phone,
                 onFieldSubmitted: (String val) {
-                  this.height = int.parse(val);
+                  HomePageState.height = int.parse(val);
                 },
               ),
             ),
@@ -183,7 +187,7 @@ class HomePageState extends State<HomePage> {
                 ),
                 keyboardType: TextInputType.phone,
                 onFieldSubmitted: (String val) {
-                  this.weight = int.parse(val);
+                  HomePageState.weight = int.parse(val);
                 },
               ),
             ),
@@ -194,10 +198,13 @@ class HomePageState extends State<HomePage> {
                 child: Text('Подобрать'),
                 highlightColor: Colors.cyanAccent,
                 onPressed: () {
-                  Navigator.push(context, 
-                  MaterialPageRoute(builder: (context)  => resultPage())
-                  );
-                },
+                  if (isButtonOff == 0) {
+                    return null;
+                  }
+                  else {
+                    pageSwitch(context);
+                  }
+                }
               ),
             )
           ],
@@ -207,5 +214,41 @@ class HomePageState extends State<HomePage> {
   }
 }
 
+class resultPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return resultPageState();
+  }
+}
 
+void pageSwitch(context) {
+  Navigator.push(context, 
+  MaterialPageRoute(builder: (context)  => resultPage()));
+}
+
+class resultPageState extends State<resultPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Результаты запроса')
+      ),
+      body: FutureBuilder<QuerySnapshot>(
+        future: db.collection('liquors').where('effect', isEqualTo: HomePageState.effect).getDocuments(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text('Загрузка...', style: TextStyle(fontSize: 15.0),);
+          }
+          return ListView(
+            children: getRefs(snapshot),
+          );
+        },
+      )
+    );
+  }
+  getRefs(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return snapshot.data.documents.map((snap) => ListTile(title: Text(snap['title']), subtitle: Text(snap['type'])))
+    .toList();
+  }
+}
 
