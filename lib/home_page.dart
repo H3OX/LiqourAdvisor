@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquor_advisor/my_flutter_app_icons.dart';
 import 'weatherRequest.dart';
 
+//Database init
 final db = Firestore.instance;
 
 class HomePage extends StatefulWidget {
@@ -19,19 +20,20 @@ class HomePageState extends State<HomePage> {
   String imageURI =
       'https://www.irishtimes.com/polopoly_fs/1.3334998.1514975827!/image/image.jpg_gen/derivatives/box_620_330/image.jpg';
 
+//Necessary variables for in-app interaction
   static int isButtonOff = 0;
   static int effect;
   static int age;
   static int weight;
   static int height;
   static String temp;
-  final sb = SnackBar(content: Text('Некоторые поля пустые!'));
-
+  static String type;
   
   @override
   Widget build(BuildContext context) {
 
     var scaffoldKey = GlobalKey<ScaffoldState>();
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       key: scaffoldKey,
@@ -141,9 +143,21 @@ class HomePageState extends State<HomePage> {
                   return (
                     ListTile(
                       trailing: Text('Температура на улице', 
-                      style: TextStyle(fontSize: 18.0, color: Colors.cyan)),
-                      leading: Icon(Icons.wb_sunny, color: Colors.yellow,),
-                      title: Text('${snapshot.data.toString()}°C', style: TextStyle(fontSize: 18.0, color: Colors.cyanAccent)),
+                      style: TextStyle(fontSize: 18.0, 
+                      color: Colors.cyan
+                        )
+                      ),
+                      leading: Icon(
+                        Icons.wb_sunny, 
+                        color: Colors.yellow
+                      ),
+                      title: Text(
+                        '${snapshot.data.toString()}°C', 
+                        style: TextStyle(
+                          fontSize: 18.0, 
+                          color: Colors.cyanAccent
+                          )
+                        ),
                       onTap: () {
                         HomePageState.temp = snapshot.data.toString();
                       }
@@ -156,8 +170,11 @@ class HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(10.0),
               child: TextFormField(
               decoration: InputDecoration(
-                icon: Icon(FontAwesomeIcons.solidAngry, color: Colors.cyan),
-                labelText: 'Возраст:'
+                labelText: 'Возраст:',
+                icon: Icon(
+                  FontAwesomeIcons.solidAngry, 
+                  color: Colors.cyan
+                  ),        
               ),
               keyboardType: TextInputType.phone,
               onFieldSubmitted: (String val) {
@@ -170,8 +187,11 @@ class HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(10.0),
               child: TextFormField(
                 decoration: InputDecoration(
-                  icon: Icon(FontAwesomeIcons.telegram, color: Colors.cyan),
-                  labelText: 'Рост:'
+                  labelText: 'Рост:',
+                  icon: Icon(
+                    FontAwesomeIcons.telegram, 
+                    color: Colors.cyan
+                    ),
                 ),
                 keyboardType: TextInputType.phone,
                 onFieldSubmitted: (String val) {
@@ -183,8 +203,11 @@ class HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(10.0),
               child: TextFormField(
                 decoration: InputDecoration(
-                  icon: Icon(FontAwesomeIcons.smile, color: Colors.cyan),
-                  labelText: 'Вес'
+                  labelText: 'Вес',
+                  icon: Icon(
+                    FontAwesomeIcons.smile, 
+                    color: Colors.cyan
+                    ),
                 ),
                 keyboardType: TextInputType.phone,
                 onFieldSubmitted: (String val) {
@@ -203,7 +226,11 @@ class HomePageState extends State<HomePage> {
                     return null;
                   }
                   else {
-                    pageSwitch(context);
+                    Navigator.push(context, 
+                    MaterialPageRoute(
+                      builder: (context)  => UniquePage()
+                        )
+                      );
                   }
                 }
               ),
@@ -215,41 +242,104 @@ class HomePageState extends State<HomePage> {
   }
 }
 
-class resultPage extends StatefulWidget {
+class UniquePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return resultPageState();
+    return UniquePageState();
   }
 }
 
-void pageSwitch(context) {
-  Navigator.push(context, 
-  MaterialPageRoute(builder: (context)  => resultPage()));
-}
-
-class resultPageState extends State<resultPage> {
+class UniquePageState extends State<UniquePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Результаты запроса')
+        title: Text('Доступно по вашему запросу:')
       ),
       body: FutureBuilder<QuerySnapshot>(
-        future: db.collection('liquors').where('effect', isEqualTo: HomePageState.effect).getDocuments(),
+
+        future: db.collection('liquors')
+        .where('effect', isEqualTo: HomePageState.effect)
+        .getDocuments(),
+
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Text('Загрузка...', style: TextStyle(fontSize: 15.0),);
+            return Text('Загрузка...', style: TextStyle(fontSize: 15.0));
           }
           return ListView(
-            children: getRefs(snapshot),
+            children: getReferences(snapshot),
           );
         },
       )
     );
   }
-  getRefs(AsyncSnapshot<QuerySnapshot> snapshot) {
-    return snapshot.data.documents.map((snap) => ListTile(title: Text(snap['title']), subtitle: Text(snap['type'])))
-    .toList();
+
+//This method returns unique liquor types from Firestore
+  getReferences(AsyncSnapshot<QuerySnapshot> snapshot) {
+
+    //Add only property 'type' from all documents to temporary list
+    var tempList = [];
+    for (var x in snapshot.data.documents) {
+      tempList.add(x.data['type']);
+    }
+    //Creating a new list containing unique values from temporary list
+    var unique = tempList.toSet().toList();
+
+    //Returning ListTiles consisting of unique liquor types
+    return unique.map(
+      (snap) => ListTile(
+      title: Text('${snap[0].toUpperCase()}${snap.substring(1)}'), 
+      trailing: Icon(Icons.zoom_in),
+      onTap: () {
+        HomePageState.type = snap;
+        Navigator.push(context, 
+        MaterialPageRoute(builder: (context)  => ResultPage()));
+      },
+      )
+    ).toList();
+  }
+}
+
+class ResultPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return ResultPageState();
+  }
+}
+
+class ResultPageState extends State<ResultPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Просмотр результатов'),
+      ),
+      body: FutureBuilder<QuerySnapshot>(
+
+        future: db.collection('liquors')
+        .where('type', isEqualTo: HomePageState.type)
+        .getDocuments(),
+
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text('Загрузка...', style: TextStyle(fontSize: 15.0),);
+          }
+          return ListView(
+            children: getResults(snapshot),
+          );
+        },
+      ),
+    );
+  }
+
+  getResults(AsyncSnapshot<QuerySnapshot> snapshot) {
+    return snapshot.data.documents.map(
+      (snap) => ListTile(
+      title: Text(snap['title']), 
+      subtitle: Text('${snap['type'][0].toUpperCase()}${snap['type'].substring(1)}'),
+      trailing: Icon(UsefulIcons.wine),
+      )
+    ).toList();
   }
 }
 
