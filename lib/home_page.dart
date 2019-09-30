@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquor_advisor/my_flutter_app_icons.dart';
 import 'weatherRequest.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 //Database init
 final db = Firestore.instance;
@@ -264,7 +267,10 @@ class UniquePageState extends State<UniquePage> {
 
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Text('Загрузка...', style: TextStyle(fontSize: 15.0));
+            return SpinKitWave(
+              color: Colors.cyan,
+              size: 50.0
+            );
           }
           return ListView(
             children: getReferences(snapshot),
@@ -322,7 +328,10 @@ class ResultPageState extends State<ResultPage> {
 
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Text('Загрузка...', style: TextStyle(fontSize: 15.0),);
+            return SpinKitWave(
+              color: Colors.cyan,
+              size: 50.0
+            );
           }
           return ListView(
             children: getResults(snapshot),
