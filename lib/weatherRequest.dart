@@ -11,7 +11,5 @@ Future<dynamic> getWeather() async {
   String url = 'https://api.darksky.net/forecast/$apiKey/${userLoc.latitude},${userLoc.longitude}?units=si';
   var response = await http.get(url);
   Map<String, dynamic> res = json.decode(response.body);
-  print(userLoc.latitude);
-  print(userLoc.longitude);
   return (res['currently']['temperature']);
 }

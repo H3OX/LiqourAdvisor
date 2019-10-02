@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +8,7 @@ import 'package:liquor_advisor/my_flutter_app_icons.dart';
 import 'weatherRequest.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:math';
+import 'package:http/http.dart' as http;
 
 //Database init
 final db = Firestore.instance;
@@ -33,8 +33,9 @@ class HomePageState extends State<HomePage> {
   static String temp;
   static String type;
   static double bmi;
-  static List requestParams = [];
   static int sex;
+  var requestParams;
+
 
   @override
   Widget build(BuildContext context) {
@@ -226,32 +227,49 @@ class HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: ExpansionTile(
+                title: Text('Пол'),
                 children: <Widget>[
-                  Radio(
-                    value: 0,
+                  ListTile(
+                    title: Text('Мужчина'),
+                    leading: Icon(FontAwesomeIcons.male),
+                    onTap: () {
+                      HomePageState.sex = 0;
+                      print(sex);
+                    },
                   ),
-                  Text('Мужчина', style: TextStyle(fontSize: 17.0)),
-                  Radio(
-                    value: 1,
-                  ),
-                  Text('Женщина', style: TextStyle(fontSize: 17.0))
-                ]
-              ),
+                  ListTile(
+                    title: Text('Женщина'),
+                    leading: Icon(FontAwesomeIcons.female),
+                    onTap: () {
+                      HomePageState.sex = 1;
+                      print(sex);
+                    },
+                  )
+                ],
+              )
             ),
             Container(
-              margin: EdgeInsets.only(top: 150.0),
+              margin: EdgeInsets.only(top: 80.0),
               child: FlatButton(
                 child: Text('Подобрать'),
                 highlightColor: Colors.cyanAccent,
-                onPressed: () {
+                onPressed: () async{
                   if (isButtonOff == 0) {
                     return null;
                   }
                   else {
                     HomePageState.bmi = HomePageState.weight/(pow((HomePageState.height/100), 2));
-                    print(HomePageState.bmi);
+                    requestParams = [sex, age, bmi].toString();
+
+                    var response = await http.post(
+                      'https://alcoml-engine.herokuapp.com/',
+                      body: {
+                        'params': requestParams
+                      }
+                      );
+                      print(response.body);
+
                     Navigator.push(context, 
                     MaterialPageRoute(
                       builder: (context)  => UniquePage()
