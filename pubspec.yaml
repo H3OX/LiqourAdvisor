@@ -23,7 +23,6 @@ dependencies:
   grouped_buttons: ^1.0.4
   flushbar: any
   font_awesome_flutter: any
-  angles: '^1.2.1'
   flutter:
     sdk: flutter
   cloud_firestore: 0.12.9+4

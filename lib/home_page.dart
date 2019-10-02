@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:liquor_advisor/my_flutter_app_icons.dart';
 import 'weatherRequest.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'dart:math';
 
 //Database init
 final db = Firestore.instance;
@@ -31,7 +32,10 @@ class HomePageState extends State<HomePage> {
   static int height;
   static String temp;
   static String type;
-  
+  static double bmi;
+  static List requestParams = [];
+  static int sex;
+
   @override
   Widget build(BuildContext context) {
 
@@ -199,6 +203,7 @@ class HomePageState extends State<HomePage> {
                 keyboardType: TextInputType.phone,
                 onFieldSubmitted: (String val) {
                   HomePageState.height = int.parse(val);
+                  print(HomePageState.height);
                 },
               ),
             ),
@@ -215,10 +220,26 @@ class HomePageState extends State<HomePage> {
                 keyboardType: TextInputType.phone,
                 onFieldSubmitted: (String val) {
                   HomePageState.weight = int.parse(val);
+                  print(HomePageState.weight);
                 },
               ),
             ),
-            
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Radio(
+                    value: 0,
+                  ),
+                  Text('Мужчина', style: TextStyle(fontSize: 17.0)),
+                  Radio(
+                    value: 1,
+                  ),
+                  Text('Женщина', style: TextStyle(fontSize: 17.0))
+                ]
+              ),
+            ),
             Container(
               margin: EdgeInsets.only(top: 150.0),
               child: FlatButton(
@@ -229,6 +250,8 @@ class HomePageState extends State<HomePage> {
                     return null;
                   }
                   else {
+                    HomePageState.bmi = HomePageState.weight/(pow((HomePageState.height/100), 2));
+                    print(HomePageState.bmi);
                     Navigator.push(context, 
                     MaterialPageRoute(
                       builder: (context)  => UniquePage()
@@ -350,6 +373,8 @@ class ResultPageState extends State<ResultPage> {
       )
     ).toList();
   }
+
+
   
 }
 
