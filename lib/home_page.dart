@@ -9,6 +9,7 @@ import 'weatherRequest.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:math';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 //Database init
 final db = Firestore.instance;
@@ -35,6 +36,8 @@ class HomePageState extends State<HomePage> {
   static double bmi;
   static int sex;
   var requestParams;
+  static String url = 'https://alcoml-engine.herokuapp.com/';
+  static String responsefromAPI = '';
 
 
   @override
@@ -250,25 +253,29 @@ class HomePageState extends State<HomePage> {
               )
             ),
             Container(
-              margin: EdgeInsets.only(top: 80.0),
+              margin: EdgeInsets.only(top: 20.0),
               child: FlatButton(
                 child: Text('Подобрать'),
                 highlightColor: Colors.cyanAccent,
-                onPressed: () async{
+                onPressed: () async {
                   if (isButtonOff == 0) {
                     return null;
                   }
                   else {
-                    HomePageState.bmi = HomePageState.weight/(pow((HomePageState.height/100), 2));
-                    requestParams = [sex, age, bmi].toString();
-
-                    var response = await http.post(
-                      'https://alcoml-engine.herokuapp.com/',
-                      body: {
-                        'params': requestParams
-                      }
-                      );
-                      print(response.body);
+                    var convertedHeight = height/100;
+                    HomePageState.bmi = HomePageState.weight/(pow(convertedHeight, 2));
+                    requestParams = [sex, age, bmi];
+                    var request = await http.post(
+                      HomePageState.url, 
+                      body: json.encode(
+                        {
+                      'params': requestParams
+                    })
+                    );
+                    setState(() {
+                     HomePageState.responsefromAPI = request.body; 
+                    }); 
+                    print(responsefromAPI);                   
 
                     Navigator.push(context, 
                     MaterialPageRoute(
@@ -278,7 +285,7 @@ class HomePageState extends State<HomePage> {
                   }
                 }
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -286,12 +293,14 @@ class HomePageState extends State<HomePage> {
   }
 }
 
+
 class UniquePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     return UniquePageState();
   }
 }
+
 
 class UniquePageState extends State<UniquePage> {
   @override
