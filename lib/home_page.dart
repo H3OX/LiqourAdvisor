@@ -22,12 +22,13 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  var sliderValue = 0.0;
   String imageURI =
       'https://www.irishtimes.com/polopoly_fs/1.3334998.1514975827!/image/image.jpg_gen/derivatives/box_620_330/image.jpg';
 
 //Necessary variables for in-app interaction
   static int isButtonOff = 0;
-  static int effect = 0;
+  static int effect;
   static int age;
   static int weight;
   static int height;
@@ -58,6 +59,7 @@ class HomePageState extends State<HomePage> {
           children: <Widget>[
             UserAccountsDrawerHeader(
               accountName: Text('Главное меню', style: TextStyle(fontSize: 20.0)),
+              accountEmail: Text(''),
               decoration: BoxDecoration(
                   image: DecorationImage(image: NetworkImage(imageURI))),
               currentAccountPicture: (GestureDetector(
@@ -107,23 +109,26 @@ class HomePageState extends State<HomePage> {
               padding: EdgeInsets.all(0.0),
               child: FutureBuilder(
                 future: getWeather(),
-                initialData: 'Fetch...',
+                initialData: '...',
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   return (
-                    ListTile(
-                      trailing: Text('Температура на улице', 
-                      style: TextStyle(fontSize: 18.0, 
-                      color: Colors.cyan
+                    Padding (
+                      padding: EdgeInsets.only(left: 35.0, right: 80.0, top: 10.0),
+                        child: ListTile(
+                          title: Text('На улице', 
+                          style: TextStyle(
+                          fontSize: 19.0, 
+                          color: Colors.cyanAccent
                         )
                       ),
                       leading: Icon(
                         Icons.wb_sunny, 
                         color: Colors.yellow
                       ),
-                      title: Text(
+                      trailing: Text(
                         '${snapshot.data.toString()}°C', 
                         style: TextStyle(
-                          fontSize: 18.0, 
+                          fontSize: 20.0, 
                           color: Colors.cyanAccent
                           )
                         ),
@@ -131,46 +136,55 @@ class HomePageState extends State<HomePage> {
                         HomePageState.temp = snapshot.data.toString();
                       }
                     )
+                    )
                   );
                 },
               )
             ),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.only(left: 50.0, right: 50.0, top: 10.0),
               child: TextFormField(
               decoration: InputDecoration(
                 labelText: 'Возраст:',
                 icon: Icon(
-                  FontAwesomeIcons.solidAngry, 
+                  FontAwesomeIcons.cannabis, 
                   color: Colors.cyan
-                  ),        
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50.0)
+                  )
               ),
               keyboardType: TextInputType.phone,
               onFieldSubmitted: (String val) {
                 HomePageState.age = int.parse(val);
-                print(HomePageState.age);
+                HomePageState.isButtonOff++;
+                print(HomePageState.isButtonOff);
               },
             ),
             ),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
               child: TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Рост:',
                   icon: Icon(
-                    FontAwesomeIcons.telegram, 
+                    FontAwesomeIcons.textHeight, 
                     color: Colors.cyan
                     ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0)
+                    )
                 ),
                 keyboardType: TextInputType.phone,
                 onFieldSubmitted: (String val) {
                   HomePageState.height = int.parse(val);
-                  print(HomePageState.height);
+                  HomePageState.isButtonOff++;
+                  print(HomePageState.isButtonOff);
                 },
               ),
             ),
             Padding(
-              padding: EdgeInsets.all(10.0),
+              padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
               child: TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Вес',
@@ -178,11 +192,45 @@ class HomePageState extends State<HomePage> {
                     FontAwesomeIcons.smile, 
                     color: Colors.cyan
                     ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0)
+                    )
                 ),
                 keyboardType: TextInputType.phone,
                 onFieldSubmitted: (String val) {
                   HomePageState.weight = int.parse(val);
-                  print(HomePageState.weight);
+                  HomePageState.isButtonOff++;
+                  print(HomePageState.isButtonOff);
+                },
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Степень опьянения от 1 до 4',
+                  icon: Icon(
+                    UsefulIcons.beer, 
+                    color: Colors.cyan
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(50.0)
+                    )
+                ),
+                keyboardType: TextInputType.phone,
+                validator: (val) {
+                  if (!(int.parse(val) >= 1 && int.parse(val) <= 4)) {
+                    HomePageState.isButtonOff = 3;
+                    return null;
+                  }
+                  return null;
+                },
+                onFieldSubmitted: (String val) {
+                  if (int.parse(val) >= 1 && int.parse(val) <= 4) {
+                    HomePageState.isButtonOff++;
+                    HomePageState.effect = int.parse(val);
+                  }
+                  print(HomePageState.isButtonOff);
                 },
               ),
             ),
@@ -196,7 +244,6 @@ class HomePageState extends State<HomePage> {
                     style: TextStyle(
                       fontSize: 17.0
                     ),
-
                     ),
                     highlightColor: Colors.cyanAccent,
                     onPressed: () {
@@ -207,10 +254,12 @@ class HomePageState extends State<HomePage> {
                       );
                       HomePageState.sex = 0;
                       print(sex);
-                    }
+                    },
+                    color: Colors.blue,
                   ),
                   FlatButton(
-                    child: Text('Женщина', style: TextStyle(
+                    child: Text('Женщина', 
+                    style: TextStyle(
                       fontSize: 17.0
                     )
                     ),
@@ -223,22 +272,24 @@ class HomePageState extends State<HomePage> {
                       );
                       HomePageState.sex = 1;
                       print(sex);
-                    }
-                  )
+                    },
+                    color: Colors.pink,
+                  ),
+                  
                 ]
-              )
-            
+              ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 100.0),
+            Padding(
+              padding: EdgeInsets.only(top: 40.0),
               child: FlatButton(
-                child: Text('Подобрать', style: TextStyle(fontSize: 20.0)),
-                highlightColor: Colors.cyanAccent,
+                child: Text('Подобрать', style: TextStyle(fontSize: 15.0)),
+                highlightColor: Colors.indigoAccent,
+                color: Colors.purple,
                 onPressed: () async {
-                  if (isButtonOff == 0) {
+                  if (isButtonOff < 4) {
                     return null;
                   }
-                  else {
+                  if (isButtonOff == 4) {
                     var convertedHeight = height/100;
                     HomePageState.bmi = HomePageState.weight/(pow(convertedHeight, 2));
                     requestParams = [sex, age, bmi];
@@ -252,46 +303,27 @@ class HomePageState extends State<HomePage> {
                     setState(() {
                      HomePageState.responsefromAPI = request.body; 
                     }); 
-                    print(responsefromAPI);                   
-
+                    print(responsefromAPI);
                     Navigator.push(context, 
                     MaterialPageRoute(
                       builder: (context)  => UniquePage()
                         )
                       );
                   }
+                  else {
+                    return null;
+                  }
                 }
               ),
-            ),
+            )
           ],
         ),
+      
+        
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: curIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(UsefulIcons.coffee_cup),
-            title: Text('Слабо')
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(UsefulIcons.coffee),
-            title: Text('Средне')
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(UsefulIcons.emo_beer),
-            title: Text('Сильно')
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(UsefulIcons.wine),
-            title: Text('Оч. Сильно')
-          )
-        ],
-        onTap: (int index) {
-          setState(() {
-            curIndex = index;
-          });
-        }
-      ),
+      
+      
+    
     );
   }
   onTabTapped(int index) {
@@ -415,3 +447,39 @@ class ResultPageState extends State<ResultPage> {
   
 }
 
+/* 
+Container(
+              margin: EdgeInsets.only(top: 100.0),
+              child: FlatButton(
+                child: Text('Подобрать', style: TextStyle(fontSize: 20.0)),
+                highlightColor: Colors.cyanAccent,
+                onPressed: () async {
+                  if (isButtonOff == 0) {
+                    return null;
+                  }
+                  else {
+                    var convertedHeight = height/100;
+                    HomePageState.bmi = HomePageState.weight/(pow(convertedHeight, 2));
+                    requestParams = [sex, age, bmi];
+                    var request = await http.post(
+                      HomePageState.url, 
+                      body: json.encode(
+                        {
+                      'params': requestParams
+                    })
+                    );
+                    setState(() {
+                     HomePageState.responsefromAPI = request.body; 
+                    }); 
+                    print(responsefromAPI);                   
+
+                    Navigator.push(context, 
+                    MaterialPageRoute(
+                      builder: (context)  => UniquePage()
+                        )
+                      );
+                  }
+                }
+              ),
+            ),
+            */
