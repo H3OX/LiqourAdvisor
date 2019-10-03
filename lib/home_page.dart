@@ -27,7 +27,7 @@ class HomePageState extends State<HomePage> {
 
 //Necessary variables for in-app interaction
   static int isButtonOff = 0;
-  static int effect;
+  static int effect = 0;
   static int age;
   static int weight;
   static int height;
@@ -38,6 +38,7 @@ class HomePageState extends State<HomePage> {
   var requestParams;
   static String url = 'https://alcoml-engine.herokuapp.com/';
   static String responsefromAPI = '';
+  int curIndex = 0;
 
 
   @override
@@ -56,8 +57,7 @@ class HomePageState extends State<HomePage> {
         child: ListView(
           children: <Widget>[
             UserAccountsDrawerHeader(
-              accountName: Text('Выберите степень опьянения:'),
-              accountEmail: Text('От этого будет зависеть эффект'),
+              accountName: Text('Главное меню', style: TextStyle(fontSize: 20.0)),
               decoration: BoxDecoration(
                   image: DecorationImage(image: NetworkImage(imageURI))),
               currentAccountPicture: (GestureDetector(
@@ -69,72 +69,30 @@ class HomePageState extends State<HomePage> {
             ),
             ListTile(
               title: Text(
-                'Слабо',
-                style: TextStyle(fontSize: 20.0),
-              ),
-              trailing: Icon(UsefulIcons.coffee_cup),
-              onTap: () {
-                Navigator.of(context).pop();
-                HomePageState.effect = 1;
-                HomePageState.isButtonOff = 1;
-                print(effect);
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Немного',
-                style: TextStyle(fontSize: 20.0),
-              ),
-              trailing: Icon(UsefulIcons.coffee),
-              onTap: () {
-                Navigator.of(context).pop();
-                HomePageState.effect = 2;
-                HomePageState.isButtonOff = 1;
-                print(effect);
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Средне',
-                style: TextStyle(fontSize: 20.0),
-              ),
-              trailing: Icon(UsefulIcons.beer),
-              onTap: () {
-                Navigator.of(context).pop();
-                HomePageState.effect = 3;
-                HomePageState.isButtonOff = 1;
-                print(effect);
-              },
-            ),
-            ListTile(
-              title: Text(
-                'Сильно',
+                'Алкоголь',
                 style: TextStyle(fontSize: 20.0),
               ),
               trailing: Icon(UsefulIcons.wine),
               onTap: () {
                 Navigator.of(context).pop();
-                HomePageState.effect = 4;
-                HomePageState.isButtonOff = 1;
                 print(effect);
               },
             ),
             ListTile(
               title: Text(
-                'Очень сильно',
+                'Найти ближайший бар',
                 style: TextStyle(fontSize: 20.0),
               ),
-              trailing: Icon(Icons.whatshot),
+              trailing: Icon(UsefulIcons.beer),
               onTap: () {
                 Navigator.of(context).pop();
-                HomePageState.effect = 5;
-                HomePageState.isButtonOff = 1;
                 print(effect);
               },
             ),
             ListTile(
-              title: Text('Закрыть', style: TextStyle(fontSize: 20.0)),
-              trailing: Icon(Icons.close),
+              title: Text('Кальянные', style: TextStyle(fontSize: 20.0)),
+              trailing: Icon(Icons.code),
+              subtitle: Text('В разработке...'),
               onTap: () {
                 Navigator.of(context).pop();
               },
@@ -230,32 +188,51 @@ class HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: EdgeInsets.all(10.0),
-              child: ExpansionTile(
-                title: Text('Пол'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  ListTile(
-                    title: Text('Мужчина'),
-                    leading: Icon(FontAwesomeIcons.male),
-                    onTap: () {
+                  FlatButton(
+                    child: Text('Мужчина',
+                    style: TextStyle(
+                      fontSize: 17.0
+                    ),
+
+                    ),
+                    highlightColor: Colors.cyanAccent,
+                    onPressed: () {
+                      scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text('Выбран пол: Мужчина'),
+                        )
+                      );
                       HomePageState.sex = 0;
                       print(sex);
-                    },
+                    }
                   ),
-                  ListTile(
-                    title: Text('Женщина'),
-                    leading: Icon(FontAwesomeIcons.female),
-                    onTap: () {
+                  FlatButton(
+                    child: Text('Женщина', style: TextStyle(
+                      fontSize: 17.0
+                    )
+                    ),
+                    highlightColor: Colors.cyanAccent,
+                    onPressed: () {
+                      scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text('Выбран пол: Женщина'),
+                        )
+                      );
                       HomePageState.sex = 1;
                       print(sex);
-                    },
+                    }
                   )
-                ],
+                ]
               )
+            
             ),
             Container(
-              margin: EdgeInsets.only(top: 20.0),
+              margin: EdgeInsets.only(top: 100.0),
               child: FlatButton(
-                child: Text('Подобрать'),
+                child: Text('Подобрать', style: TextStyle(fontSize: 20.0)),
                 highlightColor: Colors.cyanAccent,
                 onPressed: () async {
                   if (isButtonOff == 0) {
@@ -289,8 +266,39 @@ class HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: curIndex,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(UsefulIcons.coffee_cup),
+            title: Text('Слабо')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(UsefulIcons.coffee),
+            title: Text('Средне')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(UsefulIcons.emo_beer),
+            title: Text('Сильно')
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(UsefulIcons.wine),
+            title: Text('Оч. Сильно')
+          )
+        ],
+        onTap: (int index) {
+          setState(() {
+            curIndex = index;
+          });
+        }
+      ),
     );
   }
+  onTabTapped(int index) {
+   setState(() {
+     index = index;
+   });
+ }
 }
 
 
@@ -329,6 +337,8 @@ class UniquePageState extends State<UniquePage> {
       )
     );
   }
+
+  
 
 //This method returns unique liquor types from Firestore
   getReferences(AsyncSnapshot<QuerySnapshot> snapshot) {
