@@ -10,6 +10,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'weatherShow.dart';
 
 //Database init
 final db = Firestore.instance;
@@ -40,12 +41,18 @@ class HomePageState extends State<HomePage> {
   static String url = 'https://alcoml-engine.herokuapp.com/';
   static String responsefromAPI = '';
   int curIndex = 0;
+  final TextEditingController controller = new TextEditingController();
+  Color femaleColor = Colors.grey;
+  Color maleColor = Colors.grey;
+
+
 
 
   @override
   Widget build(BuildContext context) {
 
     var scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -105,42 +112,8 @@ class HomePageState extends State<HomePage> {
       body: Container(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(0.0),
-              child: FutureBuilder(
-                future: getWeather(),
-                initialData: '...',
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  return (
-                    Padding (
-                      padding: EdgeInsets.only(left: 35.0, right: 80.0, top: 10.0),
-                        child: ListTile(
-                          title: Text('На улице', 
-                          style: TextStyle(
-                          fontSize: 19.0, 
-                          color: Colors.cyanAccent
-                        )
-                      ),
-                      leading: Icon(
-                        Icons.wb_sunny, 
-                        color: Colors.yellow
-                      ),
-                      trailing: Text(
-                        '${snapshot.data.toString()}°C', 
-                        style: TextStyle(
-                          fontSize: 20.0, 
-                          color: Colors.cyanAccent
-                          )
-                        ),
-                      onTap: () {
-                        HomePageState.temp = snapshot.data.toString();
-                      }
-                    )
-                    )
-                  );
-                },
-              )
-            ),
+            weatherOut(),
+          
             Padding(
               padding: EdgeInsets.only(left: 50.0, right: 50.0, top: 10.0),
               child: TextFormField(
@@ -155,10 +128,10 @@ class HomePageState extends State<HomePage> {
                   )
               ),
               keyboardType: TextInputType.phone,
-              onFieldSubmitted: (String val) {
-                HomePageState.age = int.parse(val);
-                HomePageState.isButtonOff++;
-                print(HomePageState.isButtonOff);
+              onChanged: (val) {
+                age = int.parse(val);
+                isButtonOff++;
+                print(isButtonOff);
               },
             ),
             ),
@@ -166,7 +139,7 @@ class HomePageState extends State<HomePage> {
               padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
               child: TextFormField(
                 decoration: InputDecoration(
-                  labelText: 'Рост:',
+                  labelText: 'Рост(см):',
                   icon: Icon(
                     FontAwesomeIcons.textHeight, 
                     color: Colors.cyan
@@ -176,10 +149,10 @@ class HomePageState extends State<HomePage> {
                     )
                 ),
                 keyboardType: TextInputType.phone,
-                onFieldSubmitted: (String val) {
-                  HomePageState.height = int.parse(val);
-                  HomePageState.isButtonOff++;
-                  print(HomePageState.isButtonOff);
+                onChanged: (String val) {
+                  height = int.parse(val);
+                  isButtonOff++;
+                  print(isButtonOff);
                 },
               ),
             ),
@@ -197,16 +170,18 @@ class HomePageState extends State<HomePage> {
                     )
                 ),
                 keyboardType: TextInputType.phone,
-                onFieldSubmitted: (String val) {
-                  HomePageState.weight = int.parse(val);
-                  HomePageState.isButtonOff++;
-                  print(HomePageState.isButtonOff);
+                onChanged: (String val) {
+                  weight = int.parse(val);
+                  isButtonOff++;
+                  print(isButtonOff);
                 },
               ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
-              child: TextFormField(
+              child: Form(
+                key: formKey,
+                child: TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Степень опьянения от 1 до 4',
                   icon: Icon(
@@ -220,7 +195,7 @@ class HomePageState extends State<HomePage> {
                 keyboardType: TextInputType.phone,
                 validator: (val) {
                   if (!(int.parse(val) >= 1 && int.parse(val) <= 4)) {
-                    HomePageState.isButtonOff = 3;
+                    isButtonOff = 3;
                     return null;
                   }
                   return null;
@@ -233,6 +208,7 @@ class HomePageState extends State<HomePage> {
                   print(HomePageState.isButtonOff);
                 },
               ),
+              )
             ),
             Padding(
               padding: EdgeInsets.all(10.0),
@@ -247,6 +223,10 @@ class HomePageState extends State<HomePage> {
                     ),
                     highlightColor: Colors.cyanAccent,
                     onPressed: () {
+                      setState(() {
+                       maleColor = Colors.cyan; 
+                       femaleColor = Colors.grey;
+                      });
                       scaffoldKey.currentState.showSnackBar(
                         SnackBar(
                           content: Text('Выбран пол: Мужчина'),
@@ -255,7 +235,7 @@ class HomePageState extends State<HomePage> {
                       HomePageState.sex = 0;
                       print(sex);
                     },
-                    color: Colors.blue,
+                    color: maleColor,
                   ),
                   FlatButton(
                     child: Text('Женщина', 
@@ -265,6 +245,10 @@ class HomePageState extends State<HomePage> {
                     ),
                     highlightColor: Colors.cyanAccent,
                     onPressed: () {
+                      setState(() {
+                       femaleColor = Colors.pink; 
+                       maleColor = Colors.grey;
+                      });
                       scaffoldKey.currentState.showSnackBar(
                         SnackBar(
                           content: Text('Выбран пол: Женщина'),
@@ -273,7 +257,7 @@ class HomePageState extends State<HomePage> {
                       HomePageState.sex = 1;
                       print(sex);
                     },
-                    color: Colors.pink,
+                    color: femaleColor,
                   ),
                   
                 ]
@@ -286,10 +270,10 @@ class HomePageState extends State<HomePage> {
                 highlightColor: Colors.indigoAccent,
                 color: Colors.purple,
                 onPressed: () async {
-                  if (isButtonOff < 4) {
+                  if (isButtonOff < 8) {
                     return null;
                   }
-                  if (isButtonOff == 4) {
+                  if (isButtonOff == 8) {
                     var convertedHeight = height/100;
                     HomePageState.bmi = HomePageState.weight/(pow(convertedHeight, 2));
                     requestParams = [sex, age, bmi];
@@ -304,6 +288,10 @@ class HomePageState extends State<HomePage> {
                      HomePageState.responsefromAPI = request.body; 
                     }); 
                     print(responsefromAPI);
+                    scaffoldKey.currentState.showSnackBar(
+                        SnackBar(
+                          content: Text(responsefromAPI),
+                        ));
                     Navigator.push(context, 
                     MaterialPageRoute(
                       builder: (context)  => UniquePage()
