@@ -29,12 +29,12 @@ class HomePageState extends State<HomePage> {
   static int isButtonOff = 0;
   static int effect;
   static int age;
+  static int sex;
   static int weight;
   static int height;
   static String temp;
   static String type;
   static double bmi;
-  static int sex;
   var requestParams;
   static String url = 'https://alcoml-engine.herokuapp.com/';
   static String responsefromAPI = '';
@@ -167,6 +167,7 @@ class HomePageState extends State<HomePage> {
                     return null;
                   }
                   if (isButtonOff == 8) {
+                    HomePageState.sex = ButtonsPanelState.sex;
                     var convertedHeight = height/100;
                     bmi = weight/(pow(convertedHeight, 2));
                     requestParams = [sex, age, bmi];
@@ -177,11 +178,11 @@ class HomePageState extends State<HomePage> {
                       'params': requestParams
                     })
                     );
+                    print(requestParams);
                     setState(() {
                      responsefromAPI = request.body; 
                     });
                     print(responsefromAPI);
-                  
                     Navigator.push(context, 
                     MaterialPageRoute(
                       builder: (context)  => UniquePage()

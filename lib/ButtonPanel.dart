@@ -9,14 +9,13 @@ class ButtonsPanel extends StatefulWidget {
 }
 
 class ButtonsPanelState extends State<ButtonsPanel> {
-  Color color;
-  Color femaleColor;
-  Color maleColor;
+  Color femaleColor = Colors.grey;
+  Color maleColor = Colors.grey;
+  static int sex;
 
   @override
   void initState() {
     super.initState();
-    color = Colors.grey;
   }
 
   @override
@@ -38,6 +37,7 @@ class ButtonsPanelState extends State<ButtonsPanel> {
                 setState(() {
                   this.maleColor = Colors.cyan;
                   this.femaleColor = Colors.grey;
+                  ButtonsPanelState.sex = 0;
               });
             },
           )
@@ -56,6 +56,7 @@ class ButtonsPanelState extends State<ButtonsPanel> {
                 setState(() {
                   this.femaleColor = Colors.pink;
                   this.maleColor = Colors.grey;
+                  ButtonsPanelState.sex = 0;
               });
           },
         )
