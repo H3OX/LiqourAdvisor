@@ -11,6 +11,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'UniquePage.dart';
+import 'MLResponseFetch.dart';
 
 //Database init
 final db = Firestore.instance;
@@ -38,6 +39,7 @@ class HomePageState extends State<HomePage> {
   var requestParams;
   static String url = 'https://alcoml-engine.herokuapp.com/';
   static String responsefromAPI = '';
+  static double preferredAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +60,7 @@ class HomePageState extends State<HomePage> {
               decoration: InputDecoration(
                 labelText: 'Возраст:',
                 icon: Icon(
-                  FontAwesomeIcons.cannabis, 
+                  FontAwesomeIcons.python, 
                   color: Colors.cyan
                   ),
                   border: OutlineInputBorder(
@@ -100,7 +102,7 @@ class HomePageState extends State<HomePage> {
                 decoration: InputDecoration(
                   labelText: 'Вес',
                   icon: Icon(
-                    FontAwesomeIcons.smile, 
+                    FontAwesomeIcons.weight, 
                     color: Colors.cyan
                     ),
                     border: OutlineInputBorder(
@@ -178,11 +180,11 @@ class HomePageState extends State<HomePage> {
                       'params': requestParams
                     })
                     );
-                    print(requestParams);
                     setState(() {
                      responsefromAPI = request.body; 
                     });
-                    print(responsefromAPI);
+                    HomePageState.preferredAmount = processResponse(HomePageState.responsefromAPI);
+                    print('Preferred amount: ${HomePageState.preferredAmount}');
                     Navigator.push(context, 
                     MaterialPageRoute(
                       builder: (context)  => UniquePage()
