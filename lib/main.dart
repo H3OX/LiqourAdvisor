@@ -21,7 +21,7 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
         title: 'LiquorAdvisor',
         theme: ThemeData(
-            primarySwatch: Colors.blue,
+            primarySwatch: Colors.cyan,
             brightness: Brightness.dark
         ),
         home: HomePage()

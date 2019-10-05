@@ -4,6 +4,7 @@ import 'home_page.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'my_flutter_app_icons.dart';
+import 'WebViewPage.dart';
 
 class ResultPage extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class ResultPage extends StatefulWidget {
 }
 
 class ResultPageState extends State<ResultPage> {
+  static String queryName;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +45,15 @@ class ResultPageState extends State<ResultPage> {
   getResults(AsyncSnapshot<QuerySnapshot> snapshot) {
     return snapshot.data.documents.map(
       (snap) => ListTile(
+      
       title: Text(snap['title']), 
-      subtitle: Text('${snap['type'][0].toUpperCase()}${snap['type'].substring(1)}'),
+      subtitle: Text(/*'${snap['type'][0].toUpperCase()}${snap['type'].substring(1)}.*/'Потребуется ${snap['vol']}мл'),
       trailing: Icon(UsefulIcons.wine),
+      onTap: () {
+        ResultPageState.queryName = snap['title'];
+        Navigator.push(context, 
+        MaterialPageRoute(builder: (context)  => GoogleWebView())); 
+      },
       )
     ).toList();
   }

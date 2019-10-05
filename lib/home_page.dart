@@ -12,6 +12,8 @@ import 'dart:math';
 import 'package:http/http.dart' as http;
 import 'UniquePage.dart';
 import 'MLResponseFetch.dart';
+import 'package:flutter/services.dart';
+
 
 //Database init
 final db = Firestore.instance;
@@ -27,7 +29,11 @@ class HomePageState extends State<HomePage> {
 
   //Necessary variables for in-app interaction
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  static int isButtonOff = 0;
+  static bool isAgeEntered  = false;
+  static bool isHeightEntered = false;
+  static bool isWeightEntered = false;
+  static bool isEffectEntered = false;
+  bool isSubmitButtonActive = false;
   static int effect;
   static int age;
   static int sex;
@@ -43,11 +49,15 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final focus1 = FocusNode();
+    final focus2 = FocusNode();
+    final focus3 = FocusNode();
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text('Подбор алкоголя'),
-        backgroundColor: Colors.cyan,
+        backgroundColor: Colors.cyan
       ),
       drawer: AppDrawer(),
       body: Container(
@@ -68,10 +78,13 @@ class HomePageState extends State<HomePage> {
                   )
               ),
               keyboardType: TextInputType.phone,
-              onChanged: (val) {
+              textInputAction: TextInputAction.next,
+              autofocus: true,
+              onFieldSubmitted: (val) {
                 age = int.parse(val);
-                isButtonOff++;
-                print(isButtonOff);
+                isAgeEntered = true;
+                FocusScope.of(context).requestFocus(focus1);
+                print(isAgeEntered);
               },
             ),
             ),
@@ -89,10 +102,13 @@ class HomePageState extends State<HomePage> {
                     )
                 ),
                 keyboardType: TextInputType.phone,
-                onChanged: (String val) {
+                textInputAction: TextInputAction.next,
+                focusNode: focus1,
+                onFieldSubmitted: (String val) {
                   height = int.parse(val);
-                  isButtonOff++;
-                  print(isButtonOff);
+                  isHeightEntered = true;
+                  FocusScope.of(context).requestFocus(focus2);
+                  print(isHeightEntered);
                 },
               ),
             ),
@@ -110,10 +126,12 @@ class HomePageState extends State<HomePage> {
                     )
                 ),
                 keyboardType: TextInputType.phone,
-                onChanged: (String val) {
+                focusNode: focus2,
+                onFieldSubmitted: (String val) {
                   weight = int.parse(val);
-                  isButtonOff++;
-                  print(isButtonOff);
+                  isWeightEntered = true;
+                  FocusScope.of(context).requestFocus(focus3);
+                  print(isWeightEntered);
                 },
               ),
             ),
@@ -132,19 +150,22 @@ class HomePageState extends State<HomePage> {
                     )
                 ),
                 keyboardType: TextInputType.phone,
+                focusNode: focus3,
                 validator: (val) {
                   if (!(int.parse(val) >= 1 && int.parse(val) <= 4)) {
-                    isButtonOff = 7;
+                    isEffectEntered = false;
                     return null;
                   }
                   return null;
                 },
                 onFieldSubmitted: (String val) {
                   if (int.parse(val) >= 1 && int.parse(val) <= 4) {
-                    isButtonOff++;
+                    isEffectEntered = true;
                     effect = int.parse(val);
+                    isSubmitButtonActive = true;
+                    SystemChannels.textInput.invokeMethod('TextInput.hide');
+                    print(isSubmitButtonActive);
                   }
-                  print(isButtonOff);
                 },
               ),
               )
@@ -165,10 +186,10 @@ class HomePageState extends State<HomePage> {
                 highlightColor: Colors.indigoAccent,
                 color: Colors.purple,
                 onPressed: () async {
-                  if (isButtonOff < 8) {
+                  if (!isSubmitButtonActive) {
                     return null;
                   }
-                  if (isButtonOff == 8) {
+                  if (isSubmitButtonActive && isEffectEntered && isWeightEntered && isHeightEntered && isAgeEntered) {
                     HomePageState.sex = ButtonsPanelState.sex;
                     var convertedHeight = height/100;
                     bmi = weight/(pow(convertedHeight, 2));

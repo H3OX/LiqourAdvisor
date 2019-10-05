@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -51,7 +52,7 @@ class UniquePageState extends State<UniquePage> {
     return unique.map(
       (snap) => ListTile(
       title: Text('${snap[0].toUpperCase()}${snap.substring(1)}'), 
-      trailing: Icon(Icons.zoom_in),
+      trailing: Icon(FontAwesomeIcons.chevronRight),
       onTap: () {
         HomePageState.type = snap;
         Navigator.push(context, 
