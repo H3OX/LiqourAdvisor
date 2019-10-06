@@ -46,12 +46,29 @@ class HomePageState extends State<HomePage> {
   static String url = 'https://alcoml-engine.herokuapp.com/';
   static String responsefromAPI = '';
   static double preferredAmount;
+  FocusNode focus1;
+  FocusNode focus2;
+  FocusNode focus3;
+
+  @override
+  void initState() {
+    super.initState();
+    this.focus1 = FocusNode();
+    this.focus2 = FocusNode();
+    this.focus3 = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    this.focus1.dispose();
+    this.focus2.dispose();
+    this.focus3.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final focus1 = FocusNode();
-    final focus2 = FocusNode();
-    final focus3 = FocusNode();
+    
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -163,6 +180,7 @@ class HomePageState extends State<HomePage> {
                     isEffectEntered = true;
                     effect = int.parse(val);
                     isSubmitButtonActive = true;
+                    FocusScope.of(context).requestFocus(FocusNode());
                     SystemChannels.textInput.invokeMethod('TextInput.hide');
                     print(isSubmitButtonActive);
                   }
