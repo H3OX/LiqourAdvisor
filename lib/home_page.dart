@@ -223,7 +223,7 @@ class HomePageState extends State<HomePage> {
                      responsefromAPI = request.body; 
                     });
                     HomePageState.preferredAmount = double.parse(processResponse(HomePageState.responsefromAPI).toStringAsFixed(2));
-                    print('Preferred amount: ${HomePageState.preferredAmount}');
+                    print('Preferred amount => ${HomePageState.preferredAmount}');
                     Navigator.push(context, 
                     MaterialPageRoute(
                       builder: (context)  => UniquePage()
