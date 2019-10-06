@@ -21,8 +21,8 @@ class UniquePageState extends State<UniquePage> {
         title: Text('Доступно по вашему запросу:')
       ),
       body: FutureBuilder<QuerySnapshot>(
-        future: db.collection('liquors')
-        .where('clr', isLessThanOrEqualTo: HomePageState.preferredAmount)
+        future: db.collection('test2')
+        .where('clr', isEqualTo: HomePageState.preferredAmount)
         .getDocuments(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {

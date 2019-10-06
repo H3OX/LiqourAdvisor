@@ -222,7 +222,7 @@ class HomePageState extends State<HomePage> {
                     setState(() {
                      responsefromAPI = request.body; 
                     });
-                    HomePageState.preferredAmount = processResponse(HomePageState.responsefromAPI);
+                    HomePageState.preferredAmount = double.parse(processResponse(HomePageState.responsefromAPI).toStringAsFixed(2));
                     print('Preferred amount: ${HomePageState.preferredAmount}');
                     Navigator.push(context, 
                     MaterialPageRoute(
