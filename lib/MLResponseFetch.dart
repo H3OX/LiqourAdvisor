@@ -1,6 +1,6 @@
 import 'home_page.dart';
 
-double processResponse(MLResponse) {
+double processResponse(String MLResponse) {
   if (HomePageState.effect == 1) {
     return (double.parse(MLResponse) / 4);
   }
@@ -11,6 +11,11 @@ double processResponse(MLResponse) {
     return (double.parse(MLResponse) * 0.75);
   }
   else {
-    return (MLResponse).toDouble();
+    if (MLResponse.contains('\n')) {
+      return double.parse(MLResponse.replaceAll('\n', ''));
+    }
+    else {
+      return double.parse(MLResponse);
+    }
   }
 }
