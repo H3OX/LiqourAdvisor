@@ -47,7 +47,7 @@ class ResultPageState extends State<ResultPage> {
       (snap) => ListTile(
       
       title: Text(snap['title']), 
-      subtitle: Text(/*'${snap['type'][0].toUpperCase()}${snap['type'].substring(1)}.*/'Потребуется ${snap['vol']}мл'),
+      subtitle: Text('Потребуется ${((HomePageState.preferredAmount/(double.parse(snap['alc'].toString().replaceAll(',', '.'))/100))*500).round()}мл. Цена за объем: ${(((((HomePageState.preferredAmount/(double.parse(snap['alc'].toString().replaceAll(',', '.'))/100))*500).round())/snap['vol']) * snap['price']).round()}₽'),
       trailing: Icon(UsefulIcons.wine),
       onTap: () {
         ResultPageState.queryName = snap['title'];
@@ -56,8 +56,5 @@ class ResultPageState extends State<ResultPage> {
       },
       )
     ).toList();
-  }
-
-
-  
+  } 
 }

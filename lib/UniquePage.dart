@@ -22,7 +22,8 @@ class UniquePageState extends State<UniquePage> {
       ),
       body: FutureBuilder<QuerySnapshot>(
         future: db.collection('test2')
-        .where('clr', isEqualTo: HomePageState.preferredAmount)
+        .where('clr', isGreaterThan: HomePageState.preferredAmount - 0.02)
+        .where('clr', isLessThan: HomePageState.preferredAmount + 0.02)
         .getDocuments(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
