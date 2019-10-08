@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'package:flutter/services.dart';
 
+
 void main() {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
     .then((x) {
@@ -22,9 +23,12 @@ class MyAppState extends State<MyApp> {
         title: 'LiquorAdvisor',
         theme: ThemeData(
             primarySwatch: Colors.cyan,
-            brightness: Brightness.dark
+            brightness: Brightness.dark,
+            canvasColor: Colors.transparent
         ),
-        home: HomePage()
+        home: Container(
+          child: HomePage()
+        )
     );
   }
 }

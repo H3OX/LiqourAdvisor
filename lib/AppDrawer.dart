@@ -13,6 +13,7 @@ class AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      elevation: 0.0,
         child: ListView(
           children: <Widget>[
             UserAccountsDrawerHeader(

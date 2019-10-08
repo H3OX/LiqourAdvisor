@@ -5,6 +5,7 @@ import 'home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'ResultPage.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 class UniquePage extends StatefulWidget {
   @override
@@ -17,13 +18,23 @@ class UniquePageState extends State<UniquePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Доступно по вашему запросу:')
+      appBar: GradientAppBar(
+        title: Text('Подбор алкоголя'),
+        backgroundColorStart: Colors.blue,
+        backgroundColorEnd: Colors.red
       ),
-      body: FutureBuilder<QuerySnapshot>(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Colors.blue, Colors.red]
+          )
+        ),
+        child: FutureBuilder<QuerySnapshot>(
         future: db.collection('test2')
-        .where('clr', isGreaterThan: HomePageState.preferredAmount - 0.02)
-        .where('clr', isLessThan: HomePageState.preferredAmount + 0.02)
+        .where('clr', isGreaterThan: HomePageState.preferredAmount - 0.01)
+        .where('clr', isLessThan: HomePageState.preferredAmount + 0.04)
         .getDocuments(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -36,6 +47,7 @@ class UniquePageState extends State<UniquePage> {
             children: getReferences(snapshot),
           );
         },
+      ),
       )
     );
   }
@@ -56,6 +68,7 @@ class UniquePageState extends State<UniquePage> {
       trailing: Icon(FontAwesomeIcons.chevronRight),
       onTap: () {
         HomePageState.type = snap;
+        print(HomePageState.type);
         Navigator.push(context, 
         MaterialPageRoute(builder: (context)  => ResultPage()));
       },

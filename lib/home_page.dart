@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'UniquePage.dart';
 import 'MLResponseFetch.dart';
 import 'package:flutter/services.dart';
+import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 
 //Database init
@@ -68,16 +69,23 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
+      drawerScrimColor: Colors.blue,
+      appBar: GradientAppBar(
         title: Text('Подбор алкоголя'),
-        backgroundColor: Colors.cyan
+        backgroundColorStart: Colors.blue,
+        backgroundColorEnd: Colors.red
       ),
       drawer: AppDrawer(),
       body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Colors.blue, Colors.red]
+          )
+        ),
         child: Column(
           children: <Widget>[
             WeatherOut(),
