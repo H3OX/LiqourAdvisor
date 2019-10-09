@@ -20,7 +20,8 @@ class AppDrawerState extends State<AppDrawer> {
               accountName: Text('Главное меню', style: TextStyle(fontSize: 20.0)),
               accountEmail: Text(''),
               decoration: BoxDecoration(
-                  image: DecorationImage(image: NetworkImage('https://www.irishtimes.com/polopoly_fs/1.3334998.1514975827!/image/image.jpg_gen/derivatives/box_620_330/image.jpg'))),
+                
+                  ),
               currentAccountPicture: (GestureDetector(
                 child: CircleAvatar(
                   backgroundImage: NetworkImage(

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 
+
 class ButtonsPanel extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -9,8 +10,8 @@ class ButtonsPanel extends StatefulWidget {
 }
 
 class ButtonsPanelState extends State<ButtonsPanel> {
-  Color femaleColor = Colors.grey;
-  Color maleColor = Colors.grey;
+  Color femaleColor = Colors.grey[700];
+  Color maleColor = Colors.grey[700];
   static int sex;
 
   @override
@@ -35,8 +36,8 @@ class ButtonsPanelState extends State<ButtonsPanel> {
               ),
               onPressed: () {
                 setState(() {
-                  this.maleColor = Colors.cyan;
-                  this.femaleColor = Colors.grey;
+                  this.maleColor = Colors.indigo;
+                  this.femaleColor = Colors.grey[700];
                   ButtonsPanelState.sex = 0;
               });
             },
@@ -54,8 +55,8 @@ class ButtonsPanelState extends State<ButtonsPanel> {
               ),
               onPressed: () {
                 setState(() {
-                  this.femaleColor = Colors.pink;
-                  this.maleColor = Colors.grey;
+                  this.femaleColor = Colors.pinkAccent;
+                  this.maleColor = Colors.grey[700];
                   ButtonsPanelState.sex = 0;
               });
           },

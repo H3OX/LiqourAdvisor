@@ -20,15 +20,15 @@ class UniquePageState extends State<UniquePage> {
     return Scaffold(
       appBar: GradientAppBar(
         title: Text('Подбор алкоголя'),
-        backgroundColorStart: Colors.blue,
-        backgroundColorEnd: Colors.red
+        backgroundColorStart: HomePageState.hexToColor('#000428'),
+        backgroundColorEnd: HomePageState.hexToColor('#004e92')
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue, Colors.red]
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [HomePageState.hexToColor('#000428'), HomePageState.hexToColor('#004e92')]
           )
         ),
         child: FutureBuilder<QuerySnapshot>(

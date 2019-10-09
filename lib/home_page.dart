@@ -14,6 +14,8 @@ import 'UniquePage.dart';
 import 'MLResponseFetch.dart';
 import 'package:flutter/services.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:nice_button/nice_button.dart';
+
 
 
 //Database init
@@ -71,19 +73,18 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      drawerScrimColor: Colors.blue,
       appBar: GradientAppBar(
         title: Text('Подбор алкоголя'),
-        backgroundColorStart: Colors.blue,
-        backgroundColorEnd: Colors.red
+        backgroundColorStart: hexToColor('#000428'),
+        backgroundColorEnd: hexToColor('#004e92')
       ),
       drawer: AppDrawer(),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.blue, Colors.red]
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [hexToColor('#000428'), hexToColor('#004e92')]
           )
         ),
         child: Column(
@@ -207,10 +208,12 @@ class HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 40.0),
-              child: FlatButton(
-                child: Text('Подобрать', style: TextStyle(fontSize: 15.0)),
-                highlightColor: Colors.indigoAccent,
-                color: Colors.purple,
+              child: NiceButton(
+                radius: 40,
+                padding: const EdgeInsets.all(14),
+                text: "Подобрать",
+                icon: Icons.update,
+                gradientColors: [Colors.indigo, Colors.indigoAccent],
                 onPressed: () async {
                   if (!isSubmitButtonActive) {
                     return null;
@@ -243,11 +246,15 @@ class HomePageState extends State<HomePage> {
                     return null;
                   }
                 }
-              ),
+              )
             )
           ],
         ),
       )
     );
   }
+  static Color hexToColor(String code) {
+  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
+}
+
