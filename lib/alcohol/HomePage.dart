@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:nice_button/nice_button.dart';
+import 'package:slider_button/slider_button.dart';
 
 import 'AppDrawer.dart';
 import 'ButtonPanel.dart';
@@ -187,7 +188,7 @@ class HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(14),
                       text: "Подобрать",
                       icon: Icons.update,
-                      gradientColors: [Colors.indigo, Colors.indigoAccent],
+                      gradientColors: [Colors.deepPurple, Colors.deepOrangeAccent],
                       onPressed: () async {
                         if (!isSubmitButtonActive) {
                           return null;
@@ -219,7 +220,8 @@ class HomePageState extends State<HomePage> {
                         } else {
                           return null;
                         }
-                      }))
+                      })
+                      )
             ],
           ),
         ));

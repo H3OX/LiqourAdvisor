@@ -36,8 +36,7 @@ class UniquePageState extends State<UniquePage> {
             future: db
                 .collection('test2')
                 .where('clr',
-                    isGreaterThan: HomePageState.preferredAmount - 0.01)
-                .where('clr', isLessThan: HomePageState.preferredAmount + 0.04)
+                    isLessThan: HomePageState.preferredAmount)
                 .getDocuments(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -58,12 +57,15 @@ class UniquePageState extends State<UniquePage> {
     for (var x in snapshot.data.documents) {
       tempList.add(x.data['type']);
     }
+    print(tempList);
     //Creating a new list containing unique values from temporary list
     var unique = tempList.toSet().toList();
+    unique.remove('');
+
     //Returning ListTiles consisting of unique liquor types
     return unique
         .map((snap) => ListTile(
-              title: Text('${snap[0].toUpperCase()}${snap.substring(1)}'),
+              title: Text(snap),
               trailing: Icon(FontAwesomeIcons.chevronRight),
               onTap: () {
                 HomePageState.type = snap;

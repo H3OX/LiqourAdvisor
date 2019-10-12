@@ -32,6 +32,7 @@ dependencies:
   gradient_app_bar: ^0.0.1
   nice_button: '0.1.7'
   loading_indicator: "^1.0.0"
+  slider_button: any
 
 dev_dependencies:
   flutter_test:
