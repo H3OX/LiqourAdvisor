@@ -57,7 +57,6 @@ class UniquePageState extends State<UniquePage> {
     for (var x in snapshot.data.documents) {
       tempList.add(x.data['type']);
     }
-    print(tempList);
     //Creating a new list containing unique values from temporary list
     var unique = tempList.toSet().toList();
     unique.remove('');

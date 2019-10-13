@@ -10,7 +10,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:nice_button/nice_button.dart';
-import 'package:slider_button/slider_button.dart';
 
 import 'AppDrawer.dart';
 import 'ButtonPanel.dart';
@@ -18,6 +17,7 @@ import 'CustomIcons.dart';
 import 'MLResponseFetch.dart';
 import 'UniquePage.dart';
 import 'WeatherShow.dart';
+import 'AnimatedAwait.dart';
 
 //Database init
 final db = Firestore.instance;
@@ -44,7 +44,7 @@ class HomePageState extends State<HomePage> {
   static int height;
   static String temp;
   static String type;
-  static double bmi;
+  static int bmi;
   var requestParams;
   static String url = 'https://alcoml-engine.herokuapp.com/';
   static String responsefromAPI = '';
@@ -90,6 +90,7 @@ class HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(left: 50.0, right: 50.0, top: 10.0),
                 child: TextFormField(
+                  keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
                       labelText: 'Возраст:',
                       icon: Icon(FontAwesomeIcons.python, color: Colors.cyan),
@@ -109,6 +110,7 @@ class HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
                 child: TextFormField(
+                  keyboardAppearance: Brightness.dark,                  
                   decoration: InputDecoration(
                       labelText: 'Рост(см):',
                       icon:
@@ -129,6 +131,7 @@ class HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
                 child: TextFormField(
+                  keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
                       labelText: 'Вес',
                       icon: Icon(FontAwesomeIcons.weight, color: Colors.cyan),
@@ -148,6 +151,7 @@ class HomePageState extends State<HomePage> {
                   padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
                   child: Form(
                     child: TextFormField(
+                      keyboardAppearance: Brightness.dark,
                       decoration: InputDecoration(
                           labelText: 'Степень опьянения от 1 до 4',
                           icon: Icon(UsefulIcons.beer, color: Colors.cyan),
@@ -198,10 +202,15 @@ class HomePageState extends State<HomePage> {
                             isWeightEntered &&
                             isHeightEntered &&
                             isAgeEntered) {
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AnimatedAwait()));
                           HomePageState.sex = ButtonsPanelState.sex;
-                          var convertedHeight = height / 100;
-                          bmi = weight / (pow(convertedHeight, 2));
+                          double convertedHeight = height / 100;
+                          bmi = weight ~/ (pow(convertedHeight, 2));
                           requestParams = [sex, age, bmi];
+                          print(requestParams);
                           var request = await http.post(url,
                               body: json.encode({'params': requestParams}));
                           setState(() {
@@ -220,6 +229,7 @@ class HomePageState extends State<HomePage> {
                         } else {
                           return null;
                         }
+                        
                       })
                       )
             ],
@@ -230,4 +240,6 @@ class HomePageState extends State<HomePage> {
   static Color hexToColor(String code) {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
+
+  
 }

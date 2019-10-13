@@ -19,7 +19,7 @@ class WeatherOut extends StatelessWidget {
                     title: Text('На улице',
                         style: TextStyle(fontSize: 19.0, color: Colors.cyan)),
                     leading: Icon(Icons.wb_sunny, color: Colors.cyan),
-                    trailing: Text('${snapshot.data.toString()}°C',
+                    trailing: Text('${snapshot.data.toString()} °C',
                         style: TextStyle(
                             fontSize: 20.0, color: Colors.cyanAccent)),
                     onTap: () {
