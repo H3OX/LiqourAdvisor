@@ -37,6 +37,7 @@ class ResultPageState extends State<ResultPage> {
             future: db
                 .collection('test2')
                 .where('type', isEqualTo: HomePageState.type)
+                .limit(30)
                 .getDocuments(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
