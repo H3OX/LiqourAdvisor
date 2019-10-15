@@ -99,7 +99,13 @@ class HomePageState extends State<HomePage> {
                   keyboardType: TextInputType.phone,
                   textInputAction: TextInputAction.next,
                   autofocus: true,
+                  
                   onFieldSubmitted: (val) {
+                    
+                       //Scaffold.of(context).showSnackBar(SnackBar(content: Text('Yay! A SnackBar!')));
+                       print(val);
+
+                    
                     age = int.parse(val);
                     isAgeEntered = true;
                     FocusScope.of(context).requestFocus(focus1);
