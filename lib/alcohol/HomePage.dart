@@ -96,16 +96,13 @@ class HomePageState extends State<HomePage> {
                       icon: Icon(FontAwesomeIcons.python, color: Colors.cyan),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0))),
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
                   autofocus: true,
-                  
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly
+                  ],
                   onFieldSubmitted: (val) {
-                    
-                       //Scaffold.of(context).showSnackBar(SnackBar(content: Text('Yay! A SnackBar!')));
-                       print(val);
-
-                    
                     age = int.parse(val);
                     isAgeEntered = true;
                     FocusScope.of(context).requestFocus(focus1);
@@ -123,9 +120,12 @@ class HomePageState extends State<HomePage> {
                           Icon(FontAwesomeIcons.textHeight, color: Colors.cyan),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0))),
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
                   focusNode: focus1,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly
+                  ],
                   onFieldSubmitted: (String val) {
                     height = int.parse(val);
                     isHeightEntered = true;
@@ -143,8 +143,11 @@ class HomePageState extends State<HomePage> {
                       icon: Icon(FontAwesomeIcons.weight, color: Colors.cyan),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0))),
-                  keyboardType: TextInputType.phone,
+                  keyboardType: TextInputType.number,
                   focusNode: focus2,
+                  inputFormatters: <TextInputFormatter>[
+                    WhitelistingTextInputFormatter.digitsOnly
+                  ],
                   onFieldSubmitted: (String val) {
                     weight = int.parse(val);
                     isWeightEntered = true;
@@ -163,8 +166,13 @@ class HomePageState extends State<HomePage> {
                           icon: Icon(UsefulIcons.beer, color: Colors.cyan),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50.0))),
-                      keyboardType: TextInputType.phone,
+                      keyboardType: TextInputType.number,
                       focusNode: focus3,
+                      inputFormatters: <TextInputFormatter>[
+                        WhitelistingTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(1),
+                        BlacklistingTextInputFormatter(RegExp("[5-9]"))
+                      ],
                       validator: (val) {
                         if (!(int.parse(val) >= 1 && int.parse(val) <= 4)) {
                           isEffectEntered = false;
