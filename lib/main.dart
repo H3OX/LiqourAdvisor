@@ -24,9 +24,10 @@ class MyAppState extends State<MyApp> {
         title: 'LiquorAdvisor',
         theme: ThemeData(
             primarySwatch: Colors.lime,
-            accentColor: Colors.lime,
+            accentColor: HomePageState.hexToColor('#EB2188'),
             brightness: Brightness.dark,
-            canvasColor: Colors.transparent),
+            fontFamily: 'Montserrat'
+        ),
         home: Container(child: HomePage()));
   }
 }

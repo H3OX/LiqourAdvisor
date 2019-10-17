@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ButtonsPanel extends StatefulWidget {
   @override
@@ -26,26 +26,28 @@ class ButtonsPanelState extends State<ButtonsPanel> {
           Padding(
               padding: EdgeInsets.only(right: 15.0),
               child: FlatButton(
+                shape: StadiumBorder(),
                 color: maleColor,
                 child: Text(
                   'Мужчина',
-                  style: TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.w900),
                 ),
                 onPressed: () {
                   setState(() {
-                    this.maleColor = Colors.indigo;
+                    this.maleColor = Colors.indigoAccent;
                     this.femaleColor = Colors.grey[700];
                     ButtonsPanelState.sex = 0;
                   });
                 },
               )),
           Padding(
-              padding: EdgeInsets.only(left: 15.0),
+              padding: EdgeInsets.only(left: 25.0),
               child: FlatButton(
+                shape: StadiumBorder(),
                 color: femaleColor,
                 child: Text(
                   'Женщина',
-                  style: TextStyle(fontSize: 17.0),
+                  style: TextStyle(fontSize: 17.0, fontWeight: FontWeight.w900),
                 ),
                 onPressed: () {
                   setState(() {

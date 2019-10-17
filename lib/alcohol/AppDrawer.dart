@@ -1,5 +1,6 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
 import 'CustomIcons.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -23,7 +24,7 @@ class AppDrawerState extends State<AppDrawer> {
             currentAccountPicture: (GestureDetector(
               child: CircleAvatar(
                 backgroundImage: NetworkImage(
-                    'https://www.sheetlabels.com/resources/mm_files/labels/66877/custom-liquor-bottle-labels.jpg'),
+                    'https://cdn.liquor.com/wp-content/uploads/2017/08/07094756/Why-Your-Favorite-Booze-Bottles-Are-Shaped-the-Way-They-Are-and-Why-You-Should-Care-720x720-article-v21.jpg'),
               ),
             )),
           ),

@@ -11,13 +11,13 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:http/http.dart' as http;
 import 'package:nice_button/nice_button.dart';
 
+import 'AnimatedAwait.dart';
 import 'AppDrawer.dart';
 import 'ButtonPanel.dart';
 import 'CustomIcons.dart';
 import 'MLResponseFetch.dart';
 import 'UniquePage.dart';
 import 'WeatherShow.dart';
-import 'AnimatedAwait.dart';
 
 //Database init
 final db = Firestore.instance;
@@ -75,15 +75,15 @@ class HomePageState extends State<HomePage> {
         resizeToAvoidBottomPadding: false,
         appBar: GradientAppBar(
             title: Text('Подбор алкоголя'),
-            backgroundColorStart: hexToColor('#000428'),
-            backgroundColorEnd: hexToColor('#004e92')),
+            backgroundColorStart: hexToColor('#080A52'),
+            backgroundColorEnd: hexToColor('#080A52')),
         drawer: AppDrawer(),
         body: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [hexToColor('#000428'), hexToColor('#004e92')])),
+                  colors: [hexToColor('#080A52'), hexToColor('#080A52')])),
           child: Column(
             children: <Widget>[
               WeatherOut(),
@@ -93,7 +93,8 @@ class HomePageState extends State<HomePage> {
                   keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
                       labelText: 'Возраст:',
-                      icon: Icon(FontAwesomeIcons.python, color: Colors.cyan),
+                      icon: Icon(FontAwesomeIcons.python,
+                          color: hexToColor('#EB2188')),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0))),
                   keyboardType: TextInputType.number,
@@ -117,7 +118,8 @@ class HomePageState extends State<HomePage> {
                   decoration: InputDecoration(
                       labelText: 'Рост(см):',
                       icon:
-                          Icon(FontAwesomeIcons.textHeight, color: Colors.cyan),
+                      Icon(FontAwesomeIcons.textHeight,
+                          color: hexToColor('#EB2188')),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0))),
                   keyboardType: TextInputType.number,
@@ -140,7 +142,8 @@ class HomePageState extends State<HomePage> {
                   keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
                       labelText: 'Вес',
-                      icon: Icon(FontAwesomeIcons.weight, color: Colors.cyan),
+                      icon: Icon(FontAwesomeIcons.weight,
+                          color: hexToColor('#EB2188')),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0))),
                   keyboardType: TextInputType.number,
@@ -163,7 +166,8 @@ class HomePageState extends State<HomePage> {
                       keyboardAppearance: Brightness.dark,
                       decoration: InputDecoration(
                           labelText: 'Степень опьянения от 1 до 4',
-                          icon: Icon(UsefulIcons.beer, color: Colors.cyan),
+                          icon: Icon(
+                              UsefulIcons.beer, color: hexToColor('#EB2188')),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50.0))),
                       keyboardType: TextInputType.number,

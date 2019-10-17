@@ -15,3 +15,14 @@ double processResponse(String MLResponse) {
     }
   }
 }
+/*void func() async {
+  var request = await http.post(url,
+      body: json.encode({'params': requestParams}));
+  setState(() {
+    responsefromAPI = request.body;
+    HomePageState.preferredAmount = double.parse(
+        processResponse(HomePageState.responsefromAPI)
+            .toStringAsFixed(2));
+  });
+
+}*/

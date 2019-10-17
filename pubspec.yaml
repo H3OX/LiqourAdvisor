@@ -44,6 +44,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/images/img.jpg
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -53,7 +55,13 @@ flutter:
     - family:  MyFlutterApp
       fonts:
         - asset: fonts/MyFlutterApp.ttf
+    - family: Montserrat
+      fonts:
+        - asset: fonts/Montserrat-Light.ttf
 
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Light.ttf
 
 
   # To add assets to your application, add an assets section, like this:
