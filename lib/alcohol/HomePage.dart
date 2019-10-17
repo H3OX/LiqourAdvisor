@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,10 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
-import 'package:http/http.dart' as http;
 import 'package:nice_button/nice_button.dart';
 
-import 'AnimatedAwait.dart';
 import 'AppDrawer.dart';
 import 'ButtonPanel.dart';
 import 'CustomIcons.dart';
@@ -59,6 +56,7 @@ class HomePageState extends State<HomePage> {
     this.focus1 = FocusNode();
     this.focus2 = FocusNode();
     this.focus3 = FocusNode();
+    setParams([0, 0, 0]);
   }
 
   @override
@@ -72,10 +70,8 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         resizeToAvoidBottomPadding: false,
         appBar: GradientAppBar(
-
             title: Text('Подбор алкоголя'),
             backgroundColorStart: hexToColor('#080A52'),
             backgroundColorEnd: hexToColor('#080A52')),
@@ -116,11 +112,10 @@ class HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
                 child: TextFormField(
-                  keyboardAppearance: Brightness.dark,                  
+                  keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
                       labelText: 'Рост(см):',
-                      icon:
-                      Icon(FontAwesomeIcons.textHeight,
+                      icon: Icon(FontAwesomeIcons.textHeight,
                           color: hexToColor('#EB2188')),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50.0))),
@@ -168,8 +163,8 @@ class HomePageState extends State<HomePage> {
                       keyboardAppearance: Brightness.dark,
                       decoration: InputDecoration(
                           labelText: 'Степень опьянения от 1 до 4',
-                          icon: Icon(
-                              UsefulIcons.beer, color: hexToColor('#EB2188')),
+                          icon: Icon(UsefulIcons.beer,
+                              color: hexToColor('#EB2188')),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50.0))),
                       keyboardType: TextInputType.number,
@@ -240,9 +235,7 @@ class HomePageState extends State<HomePage> {
                         } else {
                           return null;
                         }
-                        
-                      })
-                      )
+                      }))
             ],
           ),
         ));
@@ -251,6 +244,4 @@ class HomePageState extends State<HomePage> {
   static Color hexToColor(String code) {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
-
-  
 }

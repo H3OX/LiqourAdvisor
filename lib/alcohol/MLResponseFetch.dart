@@ -1,6 +1,8 @@
-import 'HomePage.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
+import 'HomePage.dart';
 
 double processResponse(String MLResponse) {
   if (HomePageState.effect == 1) {

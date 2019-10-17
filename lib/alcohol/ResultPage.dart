@@ -56,7 +56,15 @@ class ResultPageState extends State<ResultPage> {
         .map((snap) => ListTile(
               title: Text(snap['title']),
               subtitle: Text(
-                  'Потребуется ${((HomePageState.preferredAmount / (double.parse(snap['alc'].toString().replaceAll(',', '.')) / 100)) * 500).toStringAsFixed(0)}мл. Цена за объем: ${(((((HomePageState.preferredAmount / (double.parse(snap['alc'].toString().replaceAll(',', '.')) / 100)) * 500)) / snap['vol']) * snap['price']).toStringAsFixed(0)}₽'),
+                  'Потребуется ${((HomePageState.preferredAmount /
+                      (double.parse(
+                          snap['alc'].toString().replaceAll(',', '.')) / 100)) *
+                      300).toStringAsFixed(
+                      0)}мл. Цена за объем: ${(((((HomePageState
+                      .preferredAmount / (double.parse(
+                      snap['alc'].toString().replaceAll(',', '.')) / 100)) *
+                      300)) / snap['vol']) * snap['price']).toStringAsFixed(
+                      0)}₽'),
               trailing: Icon(UsefulIcons.wine),
               onTap: () {
                 ResultPageState.queryName = snap['title'];

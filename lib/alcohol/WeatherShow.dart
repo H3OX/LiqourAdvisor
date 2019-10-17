@@ -17,14 +17,14 @@ class WeatherOut extends StatelessWidget {
                 padding: EdgeInsets.only(left: 35.0, right: 80.0, top: 10.0),
                 child: ListTile(
                     title: Text('На улице',
-                        style: TextStyle(fontSize: 19.0,
+                        style: TextStyle(fontSize: 17.0,
                             color: HomePageState.hexToColor('#EB2188'),
                             fontWeight: FontWeight.w900)),
                     leading: Icon(Icons.wb_sunny,
                         color: HomePageState.hexToColor('#EB2188')),
                     trailing: Text('${snapshot.data.toString()} °C',
                         style: TextStyle(
-                            fontSize: 20.0,
+                            fontSize: 17.0,
                             color: HomePageState.hexToColor('#EB2188'),
                             fontWeight: FontWeight.w900)),
                     onTap: () {
