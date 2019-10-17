@@ -1,4 +1,6 @@
 import 'HomePage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 double processResponse(String MLResponse) {
   if (HomePageState.effect == 1) {
@@ -15,14 +17,11 @@ double processResponse(String MLResponse) {
     }
   }
 }
-/*void func() async {
-  var request = await http.post(url,
-      body: json.encode({'params': requestParams}));
-  setState(() {
-    responsefromAPI = request.body;
-    HomePageState.preferredAmount = double.parse(
-        processResponse(HomePageState.responsefromAPI)
-            .toStringAsFixed(2));
-  });
 
-}*/
+Future setParams(params) async {
+  var request = await http.post('https://alcoml-engine.herokuapp.com/',
+      body: json.encode({'params': params}));
+  var res = request.body;
+  return double.parse(
+      processResponse(res).toStringAsFixed(2));
+}

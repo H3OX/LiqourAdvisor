@@ -19,7 +19,7 @@ class AppDrawerState extends State<AppDrawer> {
         children: <Widget>[
           UserAccountsDrawerHeader(
             accountName: Text('Главное меню', style: TextStyle(fontSize: 20.0)),
-            accountEmail: Text(''),
+            accountEmail: Text('Выберите нужную секцию'),
             decoration: BoxDecoration(),
             currentAccountPicture: (GestureDetector(
               child: CircleAvatar(

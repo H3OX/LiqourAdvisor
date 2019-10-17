@@ -72,8 +72,10 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         resizeToAvoidBottomPadding: false,
         appBar: GradientAppBar(
+
             title: Text('Подбор алкоголя'),
             backgroundColorStart: hexToColor('#080A52'),
             backgroundColorEnd: hexToColor('#080A52')),
@@ -210,7 +212,10 @@ class HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(14),
                       text: "Подобрать",
                       icon: Icons.update,
-                      gradientColors: [Colors.deepPurple, Colors.deepOrangeAccent],
+                      gradientColors: [
+                        hexToColor('#c33764'),
+                        hexToColor('#1D2671')
+                      ],
                       onPressed: () async {
                         if (!isSubmitButtonActive) {
                           return null;
@@ -220,24 +225,12 @@ class HomePageState extends State<HomePage> {
                             isWeightEntered &&
                             isHeightEntered &&
                             isAgeEntered) {
-                              Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AnimatedAwait()));
                           HomePageState.sex = ButtonsPanelState.sex;
                           double convertedHeight = height / 100;
                           bmi = weight ~/ (pow(convertedHeight, 2));
                           requestParams = [sex, age, bmi];
                           print(requestParams);
-                          var request = await http.post(url,
-                              body: json.encode({'params': requestParams}));
-                          setState(() {
-                            responsefromAPI = request.body;
-                            HomePageState.preferredAmount = double.parse(
-                                processResponse(HomePageState.responsefromAPI)
-                                    .toStringAsFixed(2));
-                          });
-
+                          preferredAmount = await setParams(requestParams);
                           print(
                               'Preferred amount -> ${HomePageState.preferredAmount}');
                           Navigator.push(

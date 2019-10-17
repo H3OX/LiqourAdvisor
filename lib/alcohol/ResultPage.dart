@@ -22,16 +22,16 @@ class ResultPageState extends State<ResultPage> {
     return Scaffold(
         appBar: GradientAppBar(
             title: Text('Подбор алкоголя'),
-            backgroundColorStart: HomePageState.hexToColor('#000428'),
-            backgroundColorEnd: HomePageState.hexToColor('#004e92')),
+            backgroundColorStart: HomePageState.hexToColor('#080A52'),
+            backgroundColorEnd: HomePageState.hexToColor('#080A52')),
         body: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                HomePageState.hexToColor('#000428'),
-                HomePageState.hexToColor('#004e92')
+                    HomePageState.hexToColor('#080A52'),
+                    HomePageState.hexToColor('#080A52')
               ])),
           child: FutureBuilder<QuerySnapshot>(
             future: db
