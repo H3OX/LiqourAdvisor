@@ -24,7 +24,7 @@ class ButtonsPanelState extends State<ButtonsPanel> {
       child: Row(
         children: <Widget>[
           Padding(
-              padding: EdgeInsets.only(right: 15.0),
+              padding: EdgeInsets.only(right: 15.0, top: 5.0),
               child: FlatButton(
                 shape: StadiumBorder(),
                 color: maleColor,
@@ -41,7 +41,7 @@ class ButtonsPanelState extends State<ButtonsPanel> {
                 },
               )),
           Padding(
-              padding: EdgeInsets.only(left: 25.0),
+              padding: EdgeInsets.only(left: 25.0, top: 5.0),
               child: FlatButton(
                 shape: StadiumBorder(),
                 color: femaleColor,

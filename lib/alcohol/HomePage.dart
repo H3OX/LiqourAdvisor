@@ -86,7 +86,7 @@ class HomePageState extends State<HomePage> {
             children: <Widget>[
               WeatherOut(),
               Padding(
-                padding: EdgeInsets.only(left: 50.0, right: 50.0, top: 10.0),
+                padding: EdgeInsets.only(left: 30.0, right: 50.0, top: 10.0),
                 child: TextFormField(
                   keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
@@ -110,7 +110,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
+                padding: EdgeInsets.only(top: 5.0, left: 30.0, right: 50.0),
                 child: TextFormField(
                   keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
@@ -134,7 +134,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
+                padding: EdgeInsets.only(top: 5.0, left: 30.0, right: 50.0),
                 child: TextFormField(
                   keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
@@ -157,7 +157,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
+                  padding: EdgeInsets.only(top: 5.0, left: 30.0, right: 50.0),
                   child: Form(
                     child: TextFormField(
                       keyboardAppearance: Brightness.dark,
