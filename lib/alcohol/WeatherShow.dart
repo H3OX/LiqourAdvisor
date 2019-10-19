@@ -14,7 +14,7 @@ class WeatherOut extends StatelessWidget {
           initialData: '...',
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             return (Padding(
-                padding: EdgeInsets.only(left: 15.0, right: 80.0, top: 10.0),
+                padding: EdgeInsets.only(left: 35.0, right: 80.0, top: 10.0),
                 child: ListTile(
                     title: Text('На улице',
                         style: TextStyle(fontSize: 17.0,

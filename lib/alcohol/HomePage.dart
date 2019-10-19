@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:nice_button/nice_button.dart';
+import 'package:location/location.dart';
 
 import 'AppDrawer.dart';
 import 'ButtonPanel.dart';
@@ -42,6 +43,7 @@ class HomePageState extends State<HomePage> {
   static String temp;
   static String type;
   static int bmi;
+  static LocationData latlng;
   var requestParams;
   static String url = 'https://alcoml-engine.herokuapp.com/';
   static String responsefromAPI = '';
@@ -86,7 +88,7 @@ class HomePageState extends State<HomePage> {
             children: <Widget>[
               WeatherOut(),
               Padding(
-                padding: EdgeInsets.only(left: 30.0, right: 50.0, top: 10.0),
+                padding: EdgeInsets.only(left: 50.0, right: 50.0, top: 10.0),
                 child: TextFormField(
                   keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
@@ -110,7 +112,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5.0, left: 30.0, right: 50.0),
+                padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
                 child: TextFormField(
                   keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
@@ -134,7 +136,7 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 5.0, left: 30.0, right: 50.0),
+                padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
                 child: TextFormField(
                   keyboardAppearance: Brightness.dark,
                   decoration: InputDecoration(
@@ -157,12 +159,12 @@ class HomePageState extends State<HomePage> {
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.only(top: 5.0, left: 30.0, right: 50.0),
+                  padding: EdgeInsets.only(top: 5.0, left: 50.0, right: 50.0),
                   child: Form(
                     child: TextFormField(
                       keyboardAppearance: Brightness.dark,
                       decoration: InputDecoration(
-                          labelText: 'Степень опьянения от 1 до 4',
+                          labelText: 'Эффект от 1 до 4',
                           icon: Icon(UsefulIcons.beer,
                               color: hexToColor('#EB2188')),
                           border: OutlineInputBorder(

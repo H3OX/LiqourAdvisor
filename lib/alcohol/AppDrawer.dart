@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'CustomIcons.dart';
+import 'Map.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -45,7 +46,10 @@ class AppDrawerState extends State<AppDrawer> {
             ),
             trailing: Icon(UsefulIcons.beer),
             onTap: () {
-              Navigator.of(context).pop();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Map())
+              );
             },
           ),
           ListTile(
