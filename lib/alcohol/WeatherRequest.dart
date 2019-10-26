@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
 import 'HomePage.dart';
@@ -11,6 +10,8 @@ var loc = new Location();
 
 Future<dynamic> getWeather() async {
   var userLoc = await loc.getLocation();
+  print(userLoc.longitude);
+  print(userLoc.latitude);
   HomePageState.latlng = userLoc;
   String url =
       'https://api.darksky.net/forecast/$apiKey/${userLoc.latitude},${userLoc.longitude}?units=si';

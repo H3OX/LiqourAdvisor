@@ -34,7 +34,9 @@ dependencies:
   loading_indicator: "^1.0.0"
   slider_button: any
   google_maps_flutter: any
-  flutter_google_places: ^0.1.4
+  flutter_google_places: any
+  flutter_google_places_autocomplete: any
+  google_maps_webservice: any
 
 dev_dependencies:
   flutter_test:

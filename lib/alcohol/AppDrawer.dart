@@ -48,7 +48,7 @@ class AppDrawerState extends State<AppDrawer> {
             onTap: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Map())
+                  MaterialPageRoute(builder: (context) => Maps())
               );
             },
           ),
