@@ -37,6 +37,7 @@ dependencies:
   flutter_google_places: any
   flutter_google_places_autocomplete: any
   google_maps_webservice: any
+  xpath: any
 
 dev_dependencies:
   flutter_test:

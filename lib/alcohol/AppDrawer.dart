@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'Recipes.dart';
 import 'CustomIcons.dart';
-import 'Map.dart';
 
 class AppDrawer extends StatefulWidget {
   @override
@@ -41,14 +41,14 @@ class AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
-              'Найти ближайший бар',
+              'Рецепты коктейлей',
               style: TextStyle(fontSize: 20.0),
             ),
             trailing: Icon(UsefulIcons.beer),
             onTap: () {
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Maps())
+                  MaterialPageRoute(builder: (context) => Recipes())
               );
             },
           ),
